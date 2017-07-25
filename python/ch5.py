@@ -51,7 +51,7 @@ def binarySearch_1(alist,item):#二分法,递归
                 return binarySearch_1(alist[midpoint+1:],item)
             else:
                 return binarySearch_1(alist[:midpoint],item)
-
+##########################################
 class HashTable:
     def __init__(self):
         self.size=11
