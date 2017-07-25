@@ -119,6 +119,7 @@ if __name__=="__main__":
     # print(binarySearch(testlist,3))
     # print(binarySearch_1(testlist, 2))
 
+<<<<<<< HEAD
     # H=HashTable()
     # H[54]="cat"
     # H[26] = "cat"
@@ -138,3 +139,20 @@ if __name__=="__main__":
     alist=[54,26,93,17,77,32,44,55,20]
     bubbleSort(alist)
     print(alist)
+=======
+    H=HashTable()
+    H[54]="cat"
+    H[26] = "cat"
+    H[93] = "cat1"
+    H[17] = "cat2"
+    H[77] = "cat3"
+    H[31] = "cat4"
+    H[44] = "cat5"
+    H[55] = "cat6"
+    H[20] = "cat7"
+    print(H.slots)
+    print(H.data)
+    H[20]='duck'
+    H[54] = "dog"
+    print(H.data)
+>>>>>>> 6f7c470d595073f36b101a9df675493ec759d5f7
