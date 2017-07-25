@@ -119,7 +119,6 @@ if __name__=="__main__":
     # print(binarySearch(testlist,3))
     # print(binarySearch_1(testlist, 2))
 
-<<<<<<< HEAD
     # H=HashTable()
     # H[54]="cat"
     # H[26] = "cat"
@@ -155,4 +154,4 @@ if __name__=="__main__":
     H[20]='duck'
     H[54] = "dog"
     print(H.data)
->>>>>>> 6f7c470d595073f36b101a9df675493ec759d5f7
+
