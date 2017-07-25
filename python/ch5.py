@@ -51,7 +51,7 @@ def binarySearch_1(alist,item):#二分法,递归
                 return binarySearch_1(alist[midpoint+1:],item)
             else:
                 return binarySearch_1(alist[:midpoint],item)
-
+############################################ 哈希表
 class HashTable:
     def __init__(self):
         self.size=11
@@ -103,8 +103,14 @@ class HashTable:
     def __setitem__(self,key,data):
         return self.put(key,data)
 
-
-
+##############################################################
+def bubbleSort(alist):
+    for passnum in range(len(alist)-1,0,-1):
+        for i in range(passnum):
+            if alist[i]>alist[i+1]:
+                temp=alist[i]
+                alist[i]=alist[i+1]
+                alist[i+1]=temp
 
 if __name__=="__main__":
     # testlist=[1,2,3,4,5]
@@ -113,19 +119,22 @@ if __name__=="__main__":
     # print(binarySearch(testlist,3))
     # print(binarySearch_1(testlist, 2))
 
-    H=HashTable()
-    H[54]="cat"
-    H[26] = "cat"
-    H[93] = "cat1"
-    H[17] = "cat2"
-    H[77] = "cat3"
-    H[31] = "cat4"
-    H[44] = "cat5"
-    H[55] = "cat6"
-    H[20] = "cat7"
-    print(H.slots)
-    print(H.data)
-    H[20]='duck'
-    H[54] = "dog"
-    print(H.data)
+    # H=HashTable()
+    # H[54]="cat"
+    # H[26] = "cat"
+    # H[93] = "cat1"
+    # H[17] = "cat2"
+    # H[77] = "cat3"
+    # H[31] = "cat4"
+    # H[44] = "cat5"
+    # H[55] = "cat6"
+    # H[20] = "cat7"
+    # print(H.slots)
+    # print(H.data)
+    # H[20]='duck'
+    # H[54] = "dog"
+    # print(H.data)
 
+    alist=[54,26,93,17,77,32,44,55,20]
+    bubbleSort(alist)
+    print(alist)
