@@ -51,7 +51,11 @@ def binarySearch_1(alist,item):#二分法,递归
                 return binarySearch_1(alist[midpoint+1:],item)
             else:
                 return binarySearch_1(alist[:midpoint],item)
+
 ##########################################
+
+############################################ 哈希表
+
 class HashTable:
     def __init__(self):
         self.size=11
@@ -103,7 +107,46 @@ class HashTable:
     def __setitem__(self,key,data):
         return self.put(key,data)
 
+##############################################################
+def bubbleSort(alist):  #冒泡法
+    for passnum in range(len(alist)-1,0,-1):
+        for i in range(passnum):
+            if alist[i]>alist[i+1]:
+                temp=alist[i]
+                alist[i]=alist[i+1]
+                alist[i+1]=temp
 
+def shortBubbleSort(alist): #短路冒泡法 ，对已经排好的序，可以做出判断，不再继续排序
+    exchange=True
+    passnum=len(alist)-1
+    while passnum>0 and exchange:
+        exchange=False
+        for i in range(passnum):
+            if alist[i]>alist[i+1]:
+                exchange=True
+                temp=alist[i]
+                alist[i]=alist[i+1]
+                alist[i+1]=temp
+        passnum =passnum-1
+
+def selectionSort(alist):  #选择排序
+    for fillsort in range(len(alist)-1,0,-1):
+        positionOfMax=0
+        for location in range(1,fillsort+1):
+            if alist[location]>alist[positionOfMax]:
+                positionOfMax=location
+        temp =alist[fillsort]
+        alist[fillsort]=alist[positionOfMax]
+        alist[positionOfMax]=temp
+
+def insertionSort(alist): #插入法
+    for index in range(1,len(alist)):
+        currentvalue=alist[index]
+        position=index
+        while position>0 and alist[position-1]>currentvalue:
+            alist[position]=alist[position-1]
+            position=position-1
+        alist[position]=currentvalue
 
 
 if __name__=="__main__":
@@ -113,18 +156,41 @@ if __name__=="__main__":
     # print(binarySearch(testlist,3))
     # print(binarySearch_1(testlist, 2))
 
-    H=HashTable()
-    H[54]="cat"
-    H[26] = "cat"
-    H[93] = "cat1"
-    H[17] = "cat2"
-    H[77] = "cat3"
-    H[31] = "cat4"
-    H[44] = "cat5"
-    H[55] = "cat6"
-    H[20] = "cat7"
-    print(H.slots)
-    print(H.data)
-    H[20]='duck'
-    H[54] = "dog"
-    print(H.data)
+    # H=HashTable()
+    # H[54]="cat"
+    # H[26] = "cat"
+    # H[93] = "cat1"
+    # H[17] = "cat2"
+    # H[77] = "cat3"
+    # H[31] = "cat4"
+    # H[44] = "cat5"
+    # H[55] = "cat6"
+    # H[20] = "cat7"
+    # print(H.slots)
+    # print(H.data)
+    # H[20]='duck'
+    # H[54] = "dog"
+    # print(H.data)
+    # H=HashTable()
+    # H[54]="cat"
+    # H[26] = "cat"
+    # H[93] = "cat1"
+    # H[17] = "cat2"
+    # H[77] = "cat3"
+    # H[31] = "cat4"
+    # H[44] = "cat5"
+    # H[55] = "cat6"
+    # H[20] = "cat7"
+    # print(H.slots)
+    # print(H.data)
+    # H[20]='duck'
+    # H[54] = "dog"
+    # print(H.data)
+
+    alist=[54,26,93,17,77,32,44,55,20]
+    bubbleSort(alist)
+    print(alist)
+    alist = [51, 26, 93, 17, 77, 32, 44, 55, 20]
+    selectionSort(alist)
+    print(alist)
+
