@@ -1,0 +1,310 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include  <algorithm>
+#include  <limits.h>
+#include  <stdio.h>
+#include<iostream>
+#include<stdlib.h>
+#include<math.h>
+using namespace std;
+typedef struct TreeNode{
+    int data;
+    TreeNode *left,*right;
+    TreeNode(int x):data(x),left(NULL),right(NULL){}
+}TreeNode,*BiTree;
+
+class Solution{//Maximum Depth of Binary Tree
+public:
+    int num;
+    int maxDepth(TreeNode *root){
+        if(!root)
+            return 0;
+        num=numeric_limits<int>::min();
+        travel(root,1);
+        return num;
+    }
+    void travel(TreeNode* node ,int level){
+        if(!node->left &&!node->right){
+            num=max(num,level);
+            return;
+        }
+        if(node->left)
+        {
+            travel(node->left,level+1);
+        }
+        if(node->right)
+        {
+            travel(node->right,level+1);
+        }
+    }
+
+};
+
+class Solution1{//Maximum Depth of Binary Tree
+public:
+    int maxDepth(TreeNode *root){
+    if(root == NULL)
+        return 0;
+    return max(maxDepth(root->left),maxDepth(root->right))+1;
+  }
+};
+/* 上面的递归调用流程
+maxDepth(p)
+    maxDepth(P->l) //2
+        maxDepth(P->l->l) //4
+            maxDepth(P->l->l->l) //null
+            maxDepth(P->l->l->r) //null
+            return 1
+        maxDepth(P->l->r) //5
+            maxDepth(P->l->r->l) //null
+            maxDepth(P->l->r->r) //null
+            return 1
+        return 2
+    maxDepth(P->R) //3
+            maxDepth(P->R->l) //6
+                maxDepth(P->r->l->l) //null
+                maxDepth(P->r->l->r) //null
+                return 1
+            maxDepth(P->R->r)//7
+                maxDepth(P->r->r->l) //null
+                maxDepth(P->r->r->r) //null
+                return 1
+            return 2
+     return max(2,2)+1
+*/
+class Solution1_1{ //minimum depth of binary tree
+public:
+    int n;
+    int minDepth(TreeNode *root){
+        if(root==NULL)
+            return 0;
+        if(root->left==NULL)
+            return minDepth(root->right)+1;
+        if(root->right==NULL)
+            return minDepth(root->left)+1;
+        return min(minDepth(root->left),minDepth(root->right))+1;
+    }
+};
+/* 上面的递归调用流程
+minDepth(p)
+    minDepth(P->l) //2
+        minDepth(P->l->l) //4
+            minDepth(P->l->l->l) //null
+            return    minDepth(P->l->l->r)+1 //null
+            return 1
+
+        minDepth(P->l->r) //5
+            minDepth(P->l->r->l) //null
+            return 1
+        return 2
+    minDepth(P->R) //3
+            minDepth(P->R->r) //null
+                minDepth(P->r->l) //6
+                   minDepth(P->r->l->l) //null
+                   return 1
+                return 2
+            return 3
+     return min(2,2)+1
+*/
+
+
+class Solution2{//construct binary tree from preorder and inorder traversal
+public:
+    unordered_map<int,int> m;
+    TreeNode *buildTree(vector<int> &inorder,vector<int> &postorder){
+        if(postorder.empty())
+            return NULL;
+
+        for(int i=0;i<inorder.size();i++)
+            m[inorder[i]]=i;
+        return build(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1,0);
+    }
+    TreeNode *build(vector<int> &inorder,int s0,int e0,vector<int> &postorder,int s1,int e1,int flag)
+    {
+        if(s0>e0||s1>e1)
+            return NULL;
+        TreeNode *root=new TreeNode(postorder[e1]); //后序遍历的最后一个元素是根
+        int mid=m[postorder[e1]];//找到中序遍历中，根的位置
+        int num=mid-s0;          //中序遍历,根的左半部分
+        cout<<flag<<endl;
+        root->left=build(inorder,s0,mid-1,postorder,s1,s1+num-1,1);
+        root->right=build(inorder,mid+1,e0,postorder,s1+num,e1-1,2);
+        return root;
+    }
+};
+class Solution3{//binary tree level order traversal
+public:
+    vector<vector<int>> levelOrder(TreeNode *root)
+    {
+        int depth=getDepth(root);
+        vector<vector<int>> ret(depth);
+
+        if(depth==0)
+            return ret;
+        getSolution(ret,root,0);
+        return ret;
+    }
+    int getDepth(TreeNode *root)
+    {
+        if(root==NULL)
+            return 0;
+        /*int left=getDepth(root->left);
+        int right=getDepth(root->right);
+        int height=(left>right?left:right)+1;
+        return height;*/
+        return max(getDepth(root->left),getDepth(root->right))+1;
+
+    }
+    void getSolution(vector<vector<int>>& ret,TreeNode* root,int level)
+    {
+        if(root==NULL)
+            return;
+        ret[level].push_back(root->data);
+        getSolution(ret,root->left,level+1);
+        getSolution(ret,root->right,level+1);
+
+    }
+};
+
+class Solution4{//Binary Tree level order travelsal II
+public:
+    vector<vector<int>>levelOrderBottom(TreeNode *root){
+        int depth=getdepth(root);
+        vector<vector<int>> ret(depth);
+        if(depth==0)
+            return ret;
+
+        DFS(root,depth-1,ret);
+        return ret;
+    }
+    int getdepth(TreeNode *root)
+    {
+        if(root==NULL)
+            return 0;
+        return max(getdepth(root->left),getdepth(root->right))+1;
+    }
+    void DFS(TreeNode *root,int level,vector<vector<int>> &ret)
+    {
+        if(root==NULL)
+            return ;
+        ret[level].push_back(root->data);
+        DFS(root->left,level-1,ret);
+        DFS(root->right,level-1,ret);
+    }
+};
+
+class Solution5{
+public:
+
+    vector<vector<int>> zigzagLevleOrder(TreeNode *root){
+        int depth=getDepth(root);
+          vector<vector<int>> vals(depth);
+        if(depth==0)
+            return vals;
+        DFS(root,0,vals);
+        for(int i=1;i<vals.size();i+=2)
+        {
+            reverse(vals[i].begin(),vals[i].end());
+        }
+        return vals;
+    }
+    int getDepth(TreeNode *root)
+    {
+        if(root==NULL)
+            return 0;
+        return max(getDepth(root->left),getDepth(root->right))+1;
+    }
+    /*
+    void DFS(TreeNode *root,int level){
+        if(root==NULL)
+            return ;
+        if(vals.size()<=level-1){
+            vals.push_back(vector<int>());
+        }
+        vals[level-1].push_back(root->data);
+        if(root->left)
+            build(root->left,level+1);
+
+    }*/
+    void DFS(TreeNode *root,int depth,vector<vector<int>> &res)
+    {
+        if(root==NULL)
+            return;
+        res[depth].push_back(root->data);
+        DFS(root->left,depth+1,res);
+        DFS(root->right,depth+1,res);
+    }
+
+};
+
+void PreOrder(BiTree T)//后续遍历
+{
+    if(T==NULL)
+        return;
+
+    PreOrder(T->left);
+    PreOrder(T->right);
+     cout<<T->data<<" ";
+}
+
+
+
+int main()
+{
+    int a[]={4,2,5,1,6,3,7};
+    int b[]={4,5,2,6,7,3,1};
+    //中序：HKDBEAIFCGJ
+    //后序: KHDEBIFJGCA
+    //前序：ABDHKECFIGJ
+    char a1[]={'H','K','D','B','E','A','I','F','C','G','J'};
+    char B1[]={'K','H','D','E','B','I','F','J','G','C','A'};
+    vector<int> mid(a,a+7);
+    vector<int> post(b,b+7);
+    Solution2 s2;
+    TreeNode *T;
+    T=s2.buildTree(mid,post);
+    PreOrder(T);
+    cout<<endl;
+    Solution1 s1;
+    int res1=s1.maxDepth(T);
+    cout<<"deep="<<res1<<endl;
+
+
+    Solution3 s3;
+    vector<vector<int>> ret3;
+    ret3=s3.levelOrder(T);
+    for(auto ai:ret3)
+    {
+         for(auto aj:ai)
+            cout<<aj<<" ";
+       cout<<endl;
+    }
+
+    Solution4 s4;
+    vector<vector<int>> ret4;
+    ret4=s4.levelOrderBottom(T);
+    for(auto ai:ret4)
+    {
+         for(auto aj:ai)
+            cout<<aj<<" ";
+       cout<<endl;
+    }
+
+    Solution5 s5;
+
+    vector<vector<int>> ret5;
+    ret5=s5.zigzagLevleOrder(T);
+    for(auto ai:ret5)
+    {
+         for(auto aj:ai)
+            cout<<aj<<" ";
+       cout<<endl;
+    }
+    cout << "Hello world!" << endl;
+    return 0;
+}
+
+
+
+

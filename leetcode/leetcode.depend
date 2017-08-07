@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1501854106 source:c:\users\administrator\desktop\py_code\datastructure\leetcode\main.cpp
+	<iostream>
+	<vector>
+	<unordered_map>
+	<algorithm>
+	<limits.h>
+
+1501982925 source:c:\users\administrator\desktop\py_code\datastructure\leetcode\tree.cpp
+	<iostream>
+	<vector>
+	<unordered_map>
+	<algorithm>
+	<limits.h>
+	<stdio.h>
+	<iostream>
+	<stdlib.h>
+	<math.h>
+
